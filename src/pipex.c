@@ -6,7 +6,7 @@
 /*   By: Tamather <Tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 03:22:28 by Tamather          #+#    #+#             */
-/*   Updated: 2021/10/04 10:28:29 by Tamather         ###   ########.fr       */
+/*   Updated: 2021/10/04 11:02:53 by Tamather         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,7 @@ static void	run(char *arg, char **envp)
 	else
 		path = cmd[0];
 	execve(path, cmd, envp);
-	ft_putstr_fd("pipex: ", 2);
-	ft_putstr_fd(path, 2);
-	ft_putendl_fd(" : command not found", 2);
+	error(path, "command not found");
 	while (cmd[i])
 	{
 		free(cmd[i]);
@@ -125,7 +123,7 @@ int	main(int argc, char **argv, char *envp[])
 	{
 		file1 = open(argv[1], O_RDONLY);
 		if (file1 == -1)
-			error(argv[4], strerror(errno));
+			error(argv[1], strerror(errno));
 		file2 = open(argv[4], O_CREAT | O_WRONLY | O_TRUNC, 00664);
 		if (file2 == -1)
 		{
