@@ -6,85 +6,50 @@
 /*   By: Tamather <Tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 03:22:28 by Tamather          #+#    #+#             */
-/*   Updated: 2021/10/04 11:02:53 by Tamather         ###   ########.fr       */
+/*   Updated: 2021/10/04 17:00:33 by Tamather         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*parse_path(char *path, char *arg)
+static void	exe(char **cmd, char **envp)
 {
-	char	*exe;
-	char	*tmp;
-	int		i;
-
-	i = 0;
-	while (path[i] && path[i] != ':')
-		i++;
-	tmp = malloc(sizeof(char) * i + 2);
-	if (!tmp)
-		exit(0);
-	ft_bzero(tmp, i + 2);
-	i = 0;
-	while (*path && *path != ':')
-	{
-		tmp[i] = *path;
-		path++;
-		i++;
-	}
-	tmp[i] = '/';
-	exe = ft_strjoin(tmp, arg);
-	free(tmp);
-	return (exe);
-}
-
-char	*get_path(char **envp, char *arg)
-{
-	int		i;
 	char	*path;
-	char	*exe;
 
-	i = 0;
-	path = NULL;
-	while (envp[i] && ft_strncmp("PATH=", envp[i], 5))
-		i++;
-	if (!envp[i])
-		return (arg);
-	path = envp[i] + 5;
-	while (*path)
+	if (!ft_strchr(cmd[0], '/'))
 	{
-		if (*path == ':')
-		{
-			exe = parse_path(path + 1, arg);
-			if (!access(exe, F_OK))
-				return (exe);
-			free(exe);
-		}
-		path++;
+		path = get_path(envp, cmd[0]);
+		execve(path, cmd, envp);
+		error(cmd[0], "command not found");
 	}
-	return (arg);
+	else
+	{
+		path = cmd[0];
+		if (access(path, X_OK))
+			error(path, strerror(errno));
+		else
+			execve(path, cmd, envp);
+	}
 }
 
 static void	run(char *arg, char **envp)
 {
-	char	*path;
 	char	**cmd;
 	int		i;
 
 	i = 0;
-	cmd = ft_split(arg, ' ');
-	if (!ft_strchr(cmd[0], '/'))
-		path = get_path(envp, cmd[0]);
-	else
-		path = cmd[0];
-	execve(path, cmd, envp);
-	error(path, "command not found");
-	while (cmd[i])
+	if (*arg)
 	{
-		free(cmd[i]);
-		i++;
+		cmd = ft_split(arg, ' ');
+		exe(cmd, envp);
+		while (cmd[i])
+			free(cmd[i++]);
+		free(cmd);
 	}
-	free(cmd);
+	else
+	{
+		error("", "command not found");
+	}
 	exit(127);
 }
 

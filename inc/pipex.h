@@ -6,7 +6,7 @@
 /*   By: Tamather <Tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 13:47:29 by Tamather          #+#    #+#             */
-/*   Updated: 2021/10/04 10:24:49 by Tamather         ###   ########.fr       */
+/*   Updated: 2021/10/04 16:59:52 by Tamather         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,6 @@
 # include <errno.h>
 # include <string.h>
 
+char	*get_path(char **envp, char *arg);
 void	error(char *name, char *err);
 #endif 
