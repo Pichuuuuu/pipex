@@ -6,11 +6,11 @@
 #    By: Tamather <Tamather@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/10 08:34:58 by tamather          #+#    #+#              #
-#    Updated: 2021/10/03 17:32:24 by Tamather         ###   ########.fr        #
+#    Updated: 2021/10/04 10:23:09 by Tamather         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = pipex.c
+SRCS = pipex.c utils.c
 SRCDIR = src
 OBJS_DIR = objs
 DEPS_DIR = deps

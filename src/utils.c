@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Tamather <Tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/02 13:47:29 by Tamather          #+#    #+#             */
-/*   Updated: 2021/10/04 10:24:49 by Tamather         ###   ########.fr       */
+/*   Created: 2021/10/04 10:22:18 by Tamather          #+#    #+#             */
+/*   Updated: 2021/10/04 10:25:02 by Tamather         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>
-# include <sys/wait.h>
-# include "../libft/libft.h"
-# include <errno.h>
-# include <string.h>
+#include "pipex.h"
 
-void	error(char *name, char *err);
-#endif 
+void	error(char *name, char *err)
+{
+	ft_putstr_fd("pipex: ", 2);
+	ft_putstr_fd(name, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putendl_fd(err, 2);
+}
